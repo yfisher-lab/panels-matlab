@@ -9,12 +9,18 @@ if exist('myPCCfg.mat','file')
     load([controller_path '\myPCCfg'],'-mat');
     if isfield(myPCCfg, 'SDDrive')
         SD_drive = myPCCfg.SDDrive;
-        defaultDrive = {SD_drive};
+        % YEF and MATC added logic 1/2022 to avoid occastional bug where SDDrive = -1
+        if ischar(SD_drive)
+            defaultDrive = {SD_drive};
+
+        else
+            defaultDrive =  {'E'};
+        end
     end
 else
     defaultDrive = {'E'};
 end
-       
+
 SD_drive = userInputSDDrive(defaultDrive);
 
 
