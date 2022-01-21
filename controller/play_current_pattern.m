@@ -61,8 +61,8 @@ if (all(pattFullName ~= 0))
         panel_pattern = load_pattern.pattern;
     end
     handles.pattern = panel_pattern;
-    handles.pattern_x_size = pattern.x_num;
-    handles.pattern_y_size = pattern.y_num;
+    handles.pattern_x_size = panel_pattern.x_num;
+    handles.pattern_y_size = panel_pattern.y_num;
     handles.x_pos = 1;
     set(handles.x_pos_val, 'string', num2str(handles.x_pos));
     set(handles.x_pos_val, 'enable', 'on');
