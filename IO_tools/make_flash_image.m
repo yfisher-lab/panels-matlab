@@ -13,9 +13,19 @@ load('Pcontrol_paths.mat');
 dos(['del /Q "' temp_path '\*.pat"']); % SS
 
 for j = 1:num_patterns
-    load_pattern = load([file_list(j).PathName '\' file_list(j).FileName]);
-    if exist('panel_pattern')==0 %#ok<EXIST>
-        panel_pattern = load_pattern.pattern;
+   
+    % YF 2022: this update is intended to fix a bug where only 1 pattern can be
+    % loaded if the variable was named pattern (expected old naming
+    % convention) or panel_pattern (expected new naming convention)
+    % now this code will now accept any name of the pattern variable as long as
+    % there is one and only one variable in the loaded .mat file
+    loadedPattern= load([file_list(j).PathName '\' file_list(j).FileName]); 
+    fieldName = fieldnames(loadedPattern);
+
+    if(length(fieldName)== 1) % check that loadedPattern has only one field
+        panel_pattern = loadedPattern.(fieldName{1}); % update variable to be named panel_pattern
+    else
+        error(['The current Pattern.mat file number:' num2str(j) 'contained more than one variable, only one variable can be accepted.'])
     end
  
     % determine if row_compression is on
